@@ -11,8 +11,10 @@
 .NOTES
     Author:       Microsoft
     Last Update:  18th July 2023
-    Version:      1.4.0.0
+    Version:      1.4.1.0
 
+	Version 1.4.1.0
+	- Corrected the ADK download & installation logic for Windows 11 24H2 with required URLs.
     Version 1.4.0.0
     - Changed design and added support to configure the correct ADK and WinPE tools based on ISO version.
     - Corrected the ADK download & installation logic for Windows 10, Windows 11 21H2 and Windows 11 22H2 with required URLs.
@@ -2105,6 +2107,11 @@ Function Get-OSWIMFromISO
                             $global:OSVersion = "10.0.22621"
                             $global:ReleaseID = "22H2"
                         }
+						ElseIf ($global:CurrentBuild -eq "26100")
+                        {
+                            $global:OSVersion = "10.0.26100"
+                            $global:ReleaseID = "24H2"
+                        }
                     }
                 }
                 Else
@@ -2115,6 +2122,7 @@ Function Get-OSWIMFromISO
                         10.0.19041 {"2004"} # Windows 10 20H1
                         10.0.22000 {"21H2"} # Windows 11 21H2
                         10.0.22621 {"22H2"} # Windows 11 22H2
+						10.0.26100 {"24H2"} # Windows 11 24H2
                     }
                 }
 
@@ -4151,3 +4159,4 @@ Write-Output "Script start: $Script_Start_Time" | Receive-Output -Color Gray -Lo
 Write-Output "Script end:   $Script_End_Time" | Receive-Output -Color Gray -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 Write-Output ""
 Write-Output "Execution time: $Script_Time_Taken seconds" | Receive-Output -Color White -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+
