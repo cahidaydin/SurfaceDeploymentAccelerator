@@ -2118,6 +2118,11 @@ Function Get-OSWIMFromISO
                             $global:OSVersion = "10.0.26100"
                             $global:ReleaseID = "24H2"
                         }
+						ElseIf ($global:CurrentBuild -eq "28000")
+                        {
+                            $global:OSVersion = "10.1.28000"
+                            $global:ReleaseID = "26H1"
+                        }
                     }
                 }
                 Else
@@ -2129,6 +2134,8 @@ Function Get-OSWIMFromISO
                         10.0.22000 {"21H2"} # Windows 11 21H2
                         10.0.22621 {"22H2"} # Windows 11 22H2
 						10.0.26100 {"24H2"} # Windows 11 24H2
+						10.1.26100 {"24H2"} # Windows 11 24H2
+						10.1.28000 {"26H1"} # Windows 11 26H1
                     }
                 }
 
@@ -4165,6 +4172,7 @@ Write-Output "Script start: $Script_Start_Time" | Receive-Output -Color Gray -Lo
 Write-Output "Script end:   $Script_End_Time" | Receive-Output -Color Gray -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 Write-Output ""
 Write-Output "Execution time: $Script_Time_Taken seconds" | Receive-Output -Color White -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+
 
 
 
