@@ -14,7 +14,7 @@
     Version:      1.4.1.0
 
 	Version 1.4.1.0
-	- Corrected the ADK download & installation logic for Windows 11 24H2 with required URLs.
+	- Added support for Windows 11 24H2
     Version 1.4.0.0
     - Changed design and added support to configure the correct ADK and WinPE tools based on ISO version.
     - Corrected the ADK download & installation logic for Windows 10, Windows 11 21H2 and Windows 11 22H2 with required URLs.
@@ -4159,4 +4159,5 @@ Write-Output "Script start: $Script_Start_Time" | Receive-Output -Color Gray -Lo
 Write-Output "Script end:   $Script_End_Time" | Receive-Output -Color Gray -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 Write-Output ""
 Write-Output "Execution time: $Script_Time_Taken seconds" | Receive-Output -Color White -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+
 
