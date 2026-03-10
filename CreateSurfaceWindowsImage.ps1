@@ -271,6 +271,7 @@ $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Obj
 Add-Type –AssemblyName System.Speech
 $SpeechSynthesizer = New-Object –TypeName System.Speech.Synthesis.SpeechSynthesizer
 $Windows10Versions = @("10.0.19041", "10.0.19042", "10.0.19043", "10.0.19044", "10.0.19045")
+$Windows11Versions = @("10.0.22000", "10.0.22621", "10.0.22631", "10.0.26100", "10.0.26200")
 
 
 Function Start-Log
@@ -688,17 +689,16 @@ Function ConfigureADKTools
             $ADKURL = "https://aka.ms/sdaadk/2004"
             $WINPEURL = "https://aka.ms/sdaadkpe/2004"
         }
-        ElseIf ($TrimmedOSVersionFromISO -eq "10.0.22000")
+        ElseIf ($Windows11Versions -contains $TrimmedOSVersionFromISO)
         {
-            Write-Output "Configure Windows 11 21H2 ADK & WinPE" | Receive-Output -Color Green -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
-            $ADKURL = "https://aka.ms/sdaadk/W11-21H2"
-            $WINPEURL = "https://aka.ms/sdaadkpe/W11-21H2"
-        }
-        ElseIf ($TrimmedOSVersionFromISO -eq "10.0.22621")
-        {
-            Write-Output "Configure Windows 11 22H2 ADK & WinPE" | Receive-Output -Color Green -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
-            $ADKURL = "https://aka.ms/sdaadk/w11-22h2"
-            $WINPEURL = "https://aka.ms/sdaadkpe/w11-22h2"
+			# https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install#download-the-adk-101280001-november-2025
+			# The Windows ADK 10.1.26100.2454 (December 2024), serviced with the latest ADK patch, and the Windows PE add-on for this ADK support the following OS releases:
+			# Windows 11, version 25H2, 24H2, and all earlier supported versions of Windows 10 and 11
+			# Windows Server 2025, and Windows Server 2022
+			
+            Write-Output "Configure Windows 11 All Versions ADK & WinPE" | Receive-Output -Color Green -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+            $ADKURL = "https://download.microsoft.com/download/6/7/4/674ec7db-7c89-4f2b-8363-689055c2b430/adk/adksetup.exe"
+			$WINPEURL = "https://download.microsoft.com/download/5/2/5/525dcde0-c7b8-487a-894d-0952775a78c7/adkwinpeaddons/adkwinpesetup.exe"
         }
 
         Write-Output "ADK URL: $ADKURL" | Receive-Output -Color Cyan -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
@@ -4036,6 +4036,10 @@ If ($global:OSVersion.Trim() -ne $global:WinPEVersion.Trim())
     {
         Write-Output "WinPE ver: $global:WinPEVersion supports OS ver: $global:OSVersion, Hence proceed..." | Receive-Output -Color Yellow -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
     }
+	ElseIf (($global:WinPEVersion.Trim() -eq "10.0.2600") -and ($Windows11Versions -contains $global:OSVersion.Trim()))
+	{
+		Write-Output "WinPE ver: $global:WinPEVersion supports OS ver: $global:OSVersion, Hence proceed..." | Receive-Output -Color Yellow -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+	}
     Else
     {
         Write-Output "OSVersion: $global:OSVersion and WinPEVersion: $global:WinPEVersion are not matching" | Receive-Output -Color Red -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
@@ -4172,6 +4176,7 @@ Write-Output "Script start: $Script_Start_Time" | Receive-Output -Color Gray -Lo
 Write-Output "Script end:   $Script_End_Time" | Receive-Output -Color Gray -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 Write-Output ""
 Write-Output "Execution time: $Script_Time_Taken seconds" | Receive-Output -Color White -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+
 
 
 
