@@ -4036,7 +4036,7 @@ If ($global:OSVersion.Trim() -ne $global:WinPEVersion.Trim())
     {
         Write-Output "WinPE ver: $global:WinPEVersion supports OS ver: $global:OSVersion, Hence proceed..." | Receive-Output -Color Yellow -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
     }
-	ElseIf (($global:WinPEVersion.Trim() -eq "10.0.2600") -and ($Windows11Versions -contains $global:OSVersion.Trim()))
+	ElseIf (($global:WinPEVersion.Trim() -eq "10.0.26100") -and ($Windows11Versions -contains $global:OSVersion.Trim()))
 	{
 		Write-Output "WinPE ver: $global:WinPEVersion supports OS ver: $global:OSVersion, Hence proceed..." | Receive-Output -Color Yellow -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 	}
@@ -4176,6 +4176,7 @@ Write-Output "Script start: $Script_Start_Time" | Receive-Output -Color Gray -Lo
 Write-Output "Script end:   $Script_End_Time" | Receive-Output -Color Gray -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 Write-Output ""
 Write-Output "Execution time: $Script_Time_Taken seconds" | Receive-Output -Color White -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+
 
 
 
