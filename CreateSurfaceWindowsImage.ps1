@@ -677,8 +677,8 @@ Function ConfigureADKTools
         $TrimmedOSVersionFromISO = $OSFullVersion.Substring(0, $OSFullVersion.LastIndexOf('.')).Trim()
         Write-Output ""
 
-        $ADKURL = "https://aka.ms/sdaadk/w11-22h2"
-        $WINPEURL = "https://aka.ms/sdaadkpe/w11-22h2"
+        $ADKURL = "https://download.microsoft.com/download/6/7/4/674ec7db-7c89-4f2b-8363-689055c2b430/adk/adksetup.exe"
+        $WINPEURL = "https://download.microsoft.com/download/5/2/5/525dcde0-c7b8-487a-894d-0952775a78c7/adkwinpeaddons/adkwinpesetup.exe"
         $ADKArguments = " $ADKPATHARGS /features OptionId.DeploymentTools /quiet"
         $WinPEArguments = " $ADKPATHARGS /features OptionId.WindowsPreinstallationEnvironment /quiet"
 
@@ -699,12 +699,6 @@ Function ConfigureADKTools
             Write-Output "Configure Windows 11 22H2 ADK & WinPE" | Receive-Output -Color Green -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
             $ADKURL = "https://aka.ms/sdaadk/w11-22h2"
             $WINPEURL = "https://aka.ms/sdaadkpe/w11-22h2"
-        }
-		ElseIf ($TrimmedOSVersionFromISO -eq "10.0.26100")
-        {
-            Write-Output "Configure Windows 11 24H2 ADK & WinPE" | Receive-Output -Color Green -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
-            $ADKURL = "https://download.microsoft.com/download/6/7/4/674ec7db-7c89-4f2b-8363-689055c2b430/adk/adksetup.exe"
-            $WINPEURL = "https://download.microsoft.com/download/5/2/5/525dcde0-c7b8-487a-894d-0952775a78c7/adkwinpeaddons/adkwinpesetup.exe"
         }
 
         Write-Output "ADK URL: $ADKURL" | Receive-Output -Color Cyan -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
@@ -2115,8 +2109,13 @@ Function Get-OSWIMFromISO
                         }
 						ElseIf ($global:CurrentBuild -eq "26100")
                         {
-                            $global:OSVersion = "10.0.26100"
-                            $global:ReleaseID = "24H2"
+                            $global:OSVersion = "10.1.26100"
+                            $global:ReleaseID = "25H2"
+                        }
+						ElseIf ($global:CurrentBuild -eq "26200")
+                        {
+                            $global:OSVersion = "10.0.26200"
+                            $global:ReleaseID = "25H2"
                         }
 						ElseIf ($global:CurrentBuild -eq "28000")
                         {
@@ -2134,7 +2133,8 @@ Function Get-OSWIMFromISO
                         10.0.22000 {"21H2"} # Windows 11 21H2
                         10.0.22621 {"22H2"} # Windows 11 22H2
 						10.0.26100 {"24H2"} # Windows 11 24H2
-						10.1.26100 {"24H2"} # Windows 11 24H2
+						10.0.26200 {"24H2"} # Windows 11 25H2
+						10.1.26100 {"25H2"} # Windows 11 25H2
 						10.1.28000 {"26H1"} # Windows 11 26H1
                     }
                 }
@@ -2681,7 +2681,7 @@ Function TattooRegistry
         }
     }
 
-    If ($Office365 -eq $true)
+    If ($36365 -eq $true)
     {
         $PathToScan = "$TempPath\Office365"
         $FileName = (Get-ChildItem -Path $PathToScan -Recurse | Where-Object { ($_.PSIsContainer) -and ($_.Name -like "16.*") }).Name
@@ -4172,6 +4172,7 @@ Write-Output "Script start: $Script_Start_Time" | Receive-Output -Color Gray -Lo
 Write-Output "Script end:   $Script_End_Time" | Receive-Output -Color Gray -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
 Write-Output ""
 Write-Output "Execution time: $Script_Time_Taken seconds" | Receive-Output -Color White -LogLevel 1 -LineNumber "$($Invocation.MyCommand.Name):$( & {$MyInvocation.ScriptLineNumber})"
+
 
 
 
